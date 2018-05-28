@@ -1,0 +1,66 @@
+the database
+===============
+Relationships
+---------------
+relationship id
+description
+
+Connections
+---------------
+KeyMember
+ConnectedParty
+Relationship
+AuditID
+
+UserAudit
+---------------
+
+create table CP_SymbolNotes
+(
+	SymbolIsin  nvarchar(20) primary key,
+	Note		nvarchar(1050) not null
+)
+go
+
+create table CP_Relationships
+(
+	RelationshipID	int identity primary key,
+	Relationship	nvarchar(100) not null
+)
+go
+
+create table CP_Connections
+(
+	KeyMemberNameID			int				not null,
+	ConnectedPartyNameID	int				not null,
+	RelationshipID			int				not null,
+	EnteredByUserID			int				not null,
+	EnteredAt				datetime		not null,
+	primary key (KeyMemberNameID, ConnectedPartyNameID),
+	foreign key (RelationshipID) references CP_Relationships (RelationshipID)
+)
+go
+insert into CP_Relationships values ('Business Partner')
+insert into CP_Relationships values ('Connected Party')
+insert into CP_Relationships values ('Daughter')
+insert into CP_Relationships values ('Husband')
+insert into CP_Relationships values ('Self')
+insert into CP_Relationships values ('Son')
+insert into CP_Relationships values ('Wife')
+
+select * from USERSHADOW where USER_LOGIN_NAME = 'tafari.johnson'
+select * from DEPOUSER where DEPOUSER_USER = 665
+select * from DEPOPART
+
+select USERSHADOW.USER_ID
+from
+	USERSHADOW
+	left join DEPOUSER on USERSHADOW.USER_ID = DEPOUSER.DEPOUSER_USER
+	left join DEPOPART on DEPOPART.DEPOPART_ID = DEPOUSER.DEPOUSER_PART_ID
+where
+	USER_LOGIN_NAME = 'tafari.johnson'
+	
+	
+select top 10 * from NAME where NAME_ACCOUNT = 182888
+select ACCOUNT_REFERENCE from ACCOUNT where ACCOUNT_ID = 182888
+	
